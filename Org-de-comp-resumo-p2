@@ -1,0 +1,79 @@
+O NÍVEL DA MICROARQUITETURA
+
+Introdução
+
+- O projeto de nível da microarquitetura depende da arquitetura do conjunto das instruções a serem implementadas e dos objetivos de custo e performance do computador que estiver sendo projetado
+- ISAs modernas com RISC podem ser resolvidas com um único clock, enquanto que ISAs mais complexas precisam de mais de um ciclo pra resolver uma instrução
+
+Um exemplo de microarquitetura
+
+- O microprograma tem um conjunto de variáveis que podem ser acessadas por todas as funções do computador, conhecidas como estado do computador
+- IJVM
+
++ Instruções pequenas e simples de serem executadas
++ Cada instrução tem poucos campos
++ O primeiro campo é o código de operação (opcode)
+
+O caminho de dados
+
+- Parte do processador que contém a ULA e todas as suas entradas e saídas
+- O caminho de dados contém
+
++ Um conjunto de processadores que só podem ser acessados pelo microprograma
++ Um barramento onde os registradores podem colocar suas informações
++ Uma ULA, cujas suas entradas estão conectadas nos barramentos A e B
++ Um deslocador alimentado pela saída da ULA e que alimenta o barramento C
+
+- F0 e F1 determinam a operação
+- ENA e ENB habilitam individualmente as entradas A e B 
+- INVA para inverter a entrada de A
+- INC que força um vem-um pro bit menos significativo
+- Temporização do caminho de dados
+
++ O início de um primeiro subciclo é dado pela transição negativa do clock
++ Atividades do subciclo: Sinais de controle são ativados; O barramento B é carregado a partir dos registradores; A ULA e o deslocador operam; O resultado da operação da ULA e do deslocador se propaga pelo barramento C em direção aos registradores
+
+- O resultado é armazenado nos registradores na transição positiva do próximo clock
+- Operação da memória
+
++ MAR - registrador de endereços
++ MDR - registrador de dados
++ PC - lê um byte da memória e o coloca nos 8 bits menos significativos do registrador MBR
++ A combinação MAR e MDR é usada para ler e escrever palavras de dados pertencentes ao nível ISA
++ A combinação PC e MBR é usada para ler o programa executável do nível ISA
++ Cada um dos registradores é controlado por um ou dois sinais de controle: Uma seta clara indicando que o sinal de controle habilita a saída do registrador pro barramento B; Uma seta escura indicando que o sinal de controle habilita a carga do registrador a partir do barramento C
++ O conteúdo do MBR pode ser copiado pro barramento B de duas formas: Como um valor sem sinal (o byte do MBR é copiado no byte menos significativo de B e os demais bits conterão 0s); Com um valor com sinal (O byte do MBR é copiado no byte menos significativo de B e terá seu bit mais significativo copiado para os demais bits desse barramento)
+
+Microinstruções
+
+- Para controlar um caminho de dados precisamos de um conjunto de sinais de controle que atuam sobre os componentes do nível da lógica digital
+- Endereço: Contém o endereço da próxima instrução a ser potencialmente ativada
+- Desvio: Determina como a próxima instrução será selecionada
+- ULA: Especifica as funções da ULA e do deslocador
+- Barramento C: Seleciona quais registradores serão carregados com o valor presente em C
+- Memória: Especifica as funções da memória
+- Barramento B: Seleciona a entrada do barramento B
+
+Controle microprogramado
+
+- Sequenciador 
+
++ Responsável pela execução de todos os passos necessário a execução de uma única instrução do nível ISA
++ Produz dois tipos de informação a cada ciclo: Estado de cada sinal de controle do sistema; Endereço da microinstrução que será executada em seguida
+
+- Memória de controle
+
++ Acessível via MBR e MDR 
++ Não precisa de sinais de leitura ou escrita porque é uma memória ROM (Só leitura)
++ Guarda microinstruções 
+
+- As microinstruções não são executadas sequencialmente 
+- O endereço da próxima microinstrução é guardada no MPC
+- O registrador de dados da memória de controle é chamado MIR
+
+Um exemplo de nível ISA
+
+- Pilhas
+
++ Pilhas de variáveis locais: Área da memória reservada pra o armazenamento de variáveis locais de um procedimento; Usam-se os registradores LV (Para apontar para o endereço base das variáveis locais) e SP (Para apontar pra palavra de mais alta ordem)
++ Pilhas de operandos: Armazenamento de operandos durante a avaliação de uma expressão

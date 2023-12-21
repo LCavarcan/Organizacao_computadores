@@ -1,0 +1,140 @@
+Introdução sobre organização de computadores
+
+- Uma sequência de instruções que serve pra realizar uma tarefa se chama programa
+- Os circuitoes eletrônicos de cada computador podem reconhecer e executar diretamente um conjunto limitado de instruções simples para o qual todos os programas podem ser convertidos antes que possam ser executados
+- As instruções primitivas de um computador formam a linguagem de máquina
+- Os projetistas são responsáveis por decidir quais instruções colocarão em sua linguagem de máquina. Eles tem que pensar no melhor trade-off entre desempenho e os requisitos de software disponíveis
+- R = PL/A -> Reduzir a área ou aumentar o tamanho leva ao aumento da resistência 
+
+- Máquinas multiníveis modernas
+
++ Multinivelamento pra ter um sistema mais eficaz
++ Nível 5: Linguagem de alto nível -Tradução-> Nivel 4: Linguagem Assembly -tradução-> Nível 3: Nível de máquina do SO -Interpretação parcial-> Nível 2: Nível de ISA -Interpretação ou execução direta-> Nível 1: Nível de microarquitetura -hardware-> Nível 0: Nível lógico digital
+
+- Evolução das máquinas de multinível
+
++ Houve uma fusão entre hardware e software graças as máquinas de multiníveis, o que trouxe o surgimento de: Microprogramação; SO; Microcódigo; A evolução das arquiteturas
+
+- Marco das evoluções das arquiteturas
+
++ Geração 0: Computadores mecânicos (1642 - 1945)
++ Geração 1: Válvulas (1945 - 1955)
++ Geração 2: Transistores (1955 - 1965)
++ Geração 3: Circuitos integrados (1965 - 1980)
++ Geração 4: VLSI - Very Large Scale Integration (1980 - Atual)
+
+- Evolução tecnológica
+
++ O principal impulsionador da evolução da indústria dos computadores é a capacidade dos fabricantes de chips de empacotar cada vez mais transistores por chip todo ano
++ Lei de Moore: A cada 18 meses o número de transistores/chip dobra
+
+- A arquitetura x86
+
++ Se baseia no modelo de Von Neumann: Memória - Sistema de interconexão --- E/S
+                                        |                |                   |
+                                      UCP (ULA; Banco de registradores; VIC) -
+                                      
++ Na evolução: Modelo        Ano         Velocidade               Memória
+               4004          1971        0,108 MHz                640 bytes (MEM)
+               80286         1982        8-12 MHz                 16 MB (MEM)
+               Pentium IV    2000        1300-3800 MHz (1 Core)   4 GB (RAM)
+               Core i7       2011        1100-3300 GHz (4 cores)  64 GB (RAM)
+
++ Barramento -> Dados, instrução e controle
+
+Organização de sistemas de computadores 
+
+- Um computador digital consiste em um sistema interconectado de processadores, memória e dispositivos de entrada e saída
+
+- Processadores
+
++ UCP
+--------
+|  UC   |
+|  ULA  |       ---------      ---------------------
+| Regs. |      | Memória |    | Dispositivos de E/S |
+---------       ---------      ---------------------
+    |               |           |    |    |    |   |
+    ------------------------------------------------
+                 Barramento
+
++ Organização da UCP:  -> ---------------
+                      |  | Registradores |
+                      |   ---------------
+                      |     |         |
+                      |     -         -
+     Caminho de dados |    | |       | | -> Registradores de entrada
+                      |     -         -
+                      |     |         | -> Barramento
+                      |     -----------
+                      |    |    ULA    |
+                      |     -----------
+                      |          |
+                      |          -
+                      |         | | -> Registrador de saída
+                      --------   - 
+
+                      Para executar uma instrução, necessita-se cumprir um ciclo de instrução
+                      Um ciclo básico de instrução contempla:
+                      - Busca de instrução
+                      - Decodificação de instrução
+                      - Busca de operando
+                      - Execução 
+                      - Armazenamento
+                      
+                      Para contemplar as instruções, foram criados dois modelos:
+                      - RISC (Reduction instruction set computer) -> Máquinas dedicadas, alto desempenho
+                      - CISC (Complex Instruction Set Computer) -> Computador pessoal
+
++ Pipelinig: Executar mais de uma instrução, em estágio diferente, ao mesmo tempo
+             Enquanto uma instrução esta na decodificação de instrução, a outra já está na busca de instrução
+             
+- Memória primária
+
++ A memória é o ponto em que os processadores podem ler e escrever informações dos seus programas executados
++ As memórias consistem em uma quantidade de células, que podem armazenar uma informação, e possuem um endereço ligadas a elas
++ Todas as células em uma memória possuem o mesmo tamanho de bits
+
+- Memória cache
+
++ Memória composta por circuitos estáticos com base no flip-flop
++ Custo de produção elevado, porém com uma performance excepcionalmente melhor que a mamória de acesso aleatório (RAM)
++ Funciona como um redutor da disparidade de latência entre o processador e a memória principal
+ -----
+| UCP |
+ -----
+   |
+ -------         -------------------
+| Cache |       | Memória principal |
+ -------         -------------------
+    |                     |
+    -----------------------
+          Barramento
+
++ A unidade de processamento busca inicialmente a informação desejada na memória cache, depois na memória principal, e só então na secundária. Isso diminui o impacto da diferença de latência entre o processador e as memórias
+
+- Memória secundária
+
++ Sempre será pequena para atender as demandas de armazenamento dos usuários
+            ^ -> Registradores
+           / \ -> Cache
+          /   \ -> Memória principal
+         /     \ -> Disco magnético e SSD
+        /       \ -> Fita / Disco ótico
+        ---------
++ Discos magnéticos: Mais consolidados e confiáveis do mercado
+                     RAID -> Gera redundância e acelera as operações com diversos discos em operação, aumentando o desempenho
+                          -> Nível 0: Ver o disco virtual simulado pelo RAID, dividido em tiras de k seletores
+                          -> Nível 1: Duplica-se todos os discos
+                          -> Nível 2: Trabalha com segmentação de palavras
+                          -> Nível 3: Acrescenta-se a paridade
+                          -> Nível 4: Trabalha com paridade de tiras
+                          -> Nível 5: Divide a paridade em discos separados
+                          
+O nível lógico digital
+
+- A partir dos elementos básicos dos computadores pode-se explorar os circuitos fundamentais que são construídos usando-se combinações de portas e realizam as operações de modo geral
+- A combinação dessas portas leva à concepção de memórias, UCP, interfaces...
+
+- Portas lógicas e álgebra booleana
+
